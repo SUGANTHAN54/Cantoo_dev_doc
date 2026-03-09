@@ -343,9 +343,6 @@ flowchart LR
 | Reporting Capability | Mature report pipeline with enterprise document libraries |
 | Error Handling | Try/catch patterns in controllers/services with status-based responses |
 
-> [!WARNING]
-> Configuration files in this repository currently include sensitive credentials. Move all secrets to secure secret management (environment variables, Azure Key Vault, or equivalent) for production governance.
-
 ---
 
 ## Documentation Notes
