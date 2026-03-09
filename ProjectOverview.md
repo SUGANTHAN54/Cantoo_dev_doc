@@ -165,7 +165,7 @@ thinkwise-api/
 - **Responsibilities**: execute SQL stored procedures and return datasets/tables.
 - **Important components**:
   - `SqlHelper.ExecuteDataset` usage across service classes
-  - SQL procedure contracts such as `spUser_*`, `spProject_*`, `spDevObjective_*`
+  - SQL procedure contracts such as `spUser_Get*`, `spProject_Ins*`, `spDevObjective_Get*`
 
 ### 5) Reporting & Document Module
 - **Purpose**: Produce business and assessment reports.
@@ -255,7 +255,7 @@ sequenceDiagram
 
     U->>C: Project setup/list request
     C->>S: Execute domain operation
-    S->>DB: spProject_*, spProjectUser*, spTempUpload360*
+    S->>DB: spProject_Ins*, spProjectUser*, spTempUpload360*
     DB-->>S: Project datasets
     S-->>C: Aggregated response DTO
     C-->>U: API response
