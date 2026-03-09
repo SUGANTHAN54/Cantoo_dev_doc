@@ -1,4 +1,4 @@
-# ?? Project Overview Documentation
+# Project Overview Documentation
 
 > [!NOTE]
 > This document summarizes the architecture and operational design of the **ThinkWise API** repository for developers, technical reviewers, and business stakeholders.
@@ -133,7 +133,7 @@ thinkwise-api/
 
 ---
 
-## ?? Main Components
+## Main Components
 
 ### 1) Authentication Module
 - **Purpose**: Authenticate users and secure protected API endpoints.
@@ -312,7 +312,7 @@ sequenceDiagram
 ## API Flow Overview
 
 ### Request Lifecycle
-`Client ? Controller ? Service ? Data Access (SqlHelper) ? SQL Server ? Service ? Controller ? Response`
+`Client -> Controller -> Service -> Data Access (SqlHelper) -> SQL Server -> Service -> Controller -> Response`
 
 ```mermaid
 flowchart LR
