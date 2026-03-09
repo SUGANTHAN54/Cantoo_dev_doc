@@ -47,7 +47,7 @@ Organizations typically run these workflows across disconnected tools (survey to
 | Data Access | `Microsoft.ApplicationBlocks.Data` (`SqlHelper`) | Stored-procedure-based DB access |
 | ORM Artifacts | Entity Framework Core models present | Supplemental data model scaffolding (`ThinkwiseCentraldevContext`) |
 | Database | SQL Server | Primary system-of-record |
-| Scheduling | Quartz | Background jobs (reminders, launch processing) |
+| Scheduling | Quartz | Background jobs (reminders processing) |
 | Email/Comms | SendGrid, Twilio | Invitation/reminder/notification workflows |
 | External CRM | HubSpot API (via RestSharp) | Contact synchronization flows |
 | Storage | Azure Blob Storage | File and logo uploads |
@@ -184,10 +184,9 @@ thinkwise-api/
 
 ### 7) Scheduler Module
 - **Purpose**: Run time-based automation.
-- **Responsibilities**: launch scheduling and reminder processing.
+- **Responsibilities**: reminder processing.
 - **Important components**:
   - `ThinkWise.Business/Service/SendMailJob.cs`
-  - `ThinkWise.Business/Service/LaunchProjectCron.cs`
   - Quartz setup in `ThinkWise/Startup.cs`
 
 ### Component Diagram
@@ -302,7 +301,7 @@ sequenceDiagram
     Q->>J: Trigger cron
     J->>DB: Fetch pending reminders
     DB-->>J: Reminder rows
-    J->>S: Execute reminder/launch actions
+    J->>S: Execute reminder actions
     S->>E: Send notifications
     S->>DB: Update execution status
     J-->>Q: Completed
@@ -339,7 +338,7 @@ flowchart LR
 | Scalability | Layered API with modular domain services and background job support |
 | Security | JWT auth, bearer validation, and protected endpoint attributes |
 | Authentication | Login/refresh/access-key flows via dedicated auth service |
-| Background Processing | Quartz-based scheduled automation for reminders and launches |
+| Background Processing | Quartz-based scheduled automation for reminders |
 | Integration Readiness | Built-in hooks for SendGrid, Twilio, HubSpot, Azure Blob |
 | Reporting Capability | Mature report pipeline with enterprise document libraries |
 | Error Handling | Try/catch patterns in controllers/services with status-based responses |
