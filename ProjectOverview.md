@@ -194,7 +194,7 @@ thinkwise-api/
 ```mermaid
 flowchart TD
     Controllers[Controllers] --> AuthService[Auth/Login Service]
-    Controllers --> SurveyService[Survey & Team Services]
+    Controllers --> SurveyService[Survey & Team Services & Hiring & Dev Plan/Assessment]
     Controllers --> ReportService[Report Services]
     Controllers --> UserService[User/Org/Partner Services]
 
