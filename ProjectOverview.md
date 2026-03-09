@@ -30,7 +30,7 @@ Organizations typically run these workflows across disconnected tools (survey to
 - Hiring workflow support (guides, candidate/interviewer flows)
 - Report generation and distribution (individual/group/teams/hiring/dev plans)
 - File/logo upload and storage integration
-- Scheduled reminder and launch automations
+- Scheduled reminder automations
 
 ---
 
