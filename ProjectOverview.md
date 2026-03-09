@@ -53,6 +53,7 @@ Organizations typically run these workflows across disconnected tools (survey to
 | Storage | Azure Blob Storage | File and logo uploads |
 | Document/Reporting | Aspose, OpenXML, iText, EPPlus, GemBox | Report and document generation |
 | Deployment Pattern | IIS/Azure-style hosting compatibility | Build assets and configuration support web deployment |
+| CI/CD Pipeline | CI/CD Pipeline (Azure DevOps / GitHub Actions) | Automated build, validation, and deployment |
 
 > [!IMPORTANT]
 > The project is primarily **stored-procedure-driven**, not a strict repository-pattern implementation.
