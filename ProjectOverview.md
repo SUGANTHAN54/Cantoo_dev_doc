@@ -28,7 +28,7 @@ Organizations typically run these workflows across disconnected tools (survey to
 - User, partner, organization, and order management
 - Survey and response workflows (360 and team survey)
 - Hiring workflow support (guides, candidate/interviewer flows)
-- Report generation and distribution (individual/group/hiring/dev plans)
+- Report generation and distribution (individual/group/teams/hiring/dev plans)
 - File/logo upload and storage integration
 - Scheduled reminder and launch automations
 
