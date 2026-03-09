@@ -83,7 +83,7 @@ flowchart LR
     Service --> Twilio[Twilio]
     Service --> HubSpot[HubSpot API]
     Service --> Blob[Azure Blob Storage]
-    Service --> Docs[Report Engines\nAspose/OpenXML/iText]
+    Service --> Docs[Report Engines/Aspose/OpenXML/iText]
 
     Quartz[Quartz Jobs] --> Service
 ```
