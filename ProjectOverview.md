@@ -351,8 +351,3 @@ flowchart LR
 - It references key files and modules without copying full source files.
 - Diagrams are Mermaid-compatible for GitHub/GitLab rendering.
 - Suitable for architecture reviews, onboarding, and stakeholder presentations.
-
----
-
-### Deliverable
-File created: `DeveloperDoc/ProjectOverview.md`
