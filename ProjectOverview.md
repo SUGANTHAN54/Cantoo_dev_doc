@@ -102,22 +102,22 @@ flowchart LR
 ```text
 thinkwise-api/
 +- ThinkWise/
-�  +- Controller/
-�  +- EmailTemplates/
-�  +- Languages/
-�  +- ReportImages/
-�  +- ReportTemp/
-�  +- TW360RosterErrors/
-�  +- Program.cs
-�  +- Startup.cs
-�  +- appsettings.json
+   +- Controller/
+   +- EmailTemplates/
+   +- Languages/
+   +- ReportImages/
+   +- ReportTemp/
+   +- TW360RosterErrors/
+   +- Program.cs
+   +- Startup.cs
+   +- appsettings.json
 +- ThinkWise.Business/
-�  +- IService/
-�  +- Service/
-�  +- CustomModel/
-�  +- Common/
-�  +- Model/
-�  +- Translate/
+   +- IService/
+   +- Service/
+   +- CustomModel/
+   +- Common/
+   +- Model/
+   +- Translate/
 +- Aspose/
 +- Build/
 +- DeveloperDoc/
