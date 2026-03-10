@@ -92,15 +92,15 @@ Reporting and Exports: PDF and Word report generation, chart rendering, and expo
 State Management Layer: Redux store, actions, and reducers for app state. Key files: src/redux/store/ConfigureStore.js, src/redux/reducers/RootReducer.js.
 API Layer: Axios clients and centralized API endpoints. Key files: src/helpers/API.js, src/helpers/APIONE.js, src/helpers/constants/ApiRoutes.js.
 
-mermaid
-flowchart TD
-Pages --> Components
-Pages --> AuthService
-AuthService --> APIServices
-Components --> UIElements
-APIServices --> Backend
-Backend --> Database
-
+```mermaid
+  flowchart TD
+    Pages --> Components
+    Pages --> AuthService
+    AuthService --> APIServices
+    Components --> UIElements
+    APIServices --> Backend
+    Backend --> Database
+```
 ---
 
 ## Key Workflows
