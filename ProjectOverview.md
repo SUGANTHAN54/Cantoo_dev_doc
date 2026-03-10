@@ -39,14 +39,15 @@ Target users include HR leaders, organizational admins, project administrators, 
 
 ## System Architecture
 
-mermaid
-flowchart LR
-User --> Browser
-Browser --> ReactUI
-ReactUI --> StateManagement
-StateManagement --> APIServices
-APIServices --> Backend
-Backend --> Database
+```mermaid
+  flowchart LR
+    User --> Browser
+    Browser --> ReactUI
+    ReactUI --> StateManagement
+    StateManagement --> APIServices
+    APIServices --> Backend
+    Backend --> Database
+```
 
 Component roles:
 User and Browser: Human interaction and browser runtime.
