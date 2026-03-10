@@ -49,7 +49,7 @@ Target users include HR leaders, organizational admins, project administrators, 
     Backend --> Database
 ```
 
-Component roles:
+### Component roles:
 
 User and Browser: Human interaction and browser runtime.
 
@@ -77,7 +77,8 @@ text
   App.js
   index.js
 
-Folder responsibilities:
+### Folder responsibilities:
+
 src/assets: Static images, icons, templates, and font assets.
 
 src/components: Feature modules and UI screens (auth, surveys, reports, admin, layout).
