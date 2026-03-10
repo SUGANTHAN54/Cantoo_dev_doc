@@ -112,14 +112,15 @@ API Layer: Axios clients and centralized API endpoints. Key files: src/helpers/A
 3. Backend returns token and user metadata.
 4. Token is stored in local storage and protected routes become available.
 
-mermaid
-sequenceDiagram
-User->>ReactUI: Enter credentials
-ReactUI->>APIServices: POST /api/Login/login
-APIServices->>Backend: Authenticate user
-Backend-->>APIServices: Token and user data
-APIServices-->>ReactUI: Success response
-ReactUI-->>User: Redirect to dashboard
+```mermaid
+  sequenceDiagram
+    User->>ReactUI: Enter credentials
+    ReactUI->>APIServices: POST /api/Login/login
+    APIServices->>Backend: Authenticate user
+    Backend-->>APIServices: Token and user data
+    APIServices-->>ReactUI: Success response
+    ReactUI-->>User: Redirect to dashboard
+```
 
 ### Create 360 Project
 
@@ -139,6 +140,7 @@ ReactUI-->>User: Redirect to dashboard
     ReactUI->>APIServices: POST /api/Survey360/launchProject
     APIServices-->>ReactUI: Launch confirmation
 ```
+
 ### Team Survey Task Completion
 
 1. Participant follows invite link.
