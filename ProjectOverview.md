@@ -128,17 +128,17 @@ ReactUI-->>User: Redirect to dashboard
 3. User selects competencies and items.
 4. Roster is created or imported, then project is launched.
 
-mermaid
-sequenceDiagram
-Admin->>ReactUI: Start new 360 project
-ReactUI->>APIServices: POST /api/Survey360/startFromScratch
-APIServices->>Backend: Create project
-Backend-->>APIServices: Project id
-ReactUI->>APIServices: POST /api/Survey360/addProjectItems
-ReactUI->>APIServices: POST /api/RosterUpload/addToRoster
-ReactUI->>APIServices: POST /api/Survey360/launchProject
-APIServices-->>ReactUI: Launch confirmation
-
+```mermaid
+  sequenceDiagram
+    Admin->>ReactUI: Start new 360 project
+    ReactUI->>APIServices: POST /api/Survey360/startFromScratch
+    APIServices->>Backend: Create project
+    Backend-->>APIServices: Project id
+    ReactUI->>APIServices: POST /api/Survey360/addProjectItems
+    ReactUI->>APIServices: POST /api/RosterUpload/addToRoster
+    ReactUI->>APIServices: POST /api/Survey360/launchProject
+    APIServices-->>ReactUI: Launch confirmation
+```
 ### Team Survey Task Completion
 
 1. Participant follows invite link.
@@ -146,14 +146,15 @@ APIServices-->>ReactUI: Launch confirmation
 3. Participant submits ratings and open-ended responses.
 4. Backend stores responses and updates task status.
 
-mermaid
-sequenceDiagram
-Participant->>ReactUI: Open task link
-ReactUI->>APIServices: GET /api/TeamSurvey/getTeamSurveyLink
-APIServices->>Backend: Resolve task
-Backend-->>APIServices: Task context
-ReactUI->>APIServices: POST /api/TeamSurvey/performConfirmation
-APIServices-->>ReactUI: Submission result
+```mermaid
+  sequenceDiagram
+    Participant->>ReactUI: Open task link
+    ReactUI->>APIServices: GET /api/TeamSurvey/getTeamSurveyLink
+    APIServices->>Backend: Resolve task
+    Backend-->>APIServices: Task context
+    ReactUI->>APIServices: POST /api/TeamSurvey/performConfirmation
+    APIServices-->>ReactUI: Submission result
+```
 
 ### Report Generation
 
@@ -162,26 +163,28 @@ APIServices-->>ReactUI: Submission result
 3. Report metadata and content are returned.
 4. Client renders PDF or Word export.
 
-mermaid
-sequenceDiagram
-Admin->>ReactUI: Request report
-ReactUI->>APIServices: POST /api/Report/ProjectSummaryReportGenerate
-APIServices->>Backend: Generate report
-Backend-->>APIServices: Report data
-APIServices-->>ReactUI: Render and export
+```mermaid
+  sequenceDiagram
+    Admin->>ReactUI: Request report
+    ReactUI->>APIServices: POST /api/Report/ProjectSummaryReportGenerate
+    APIServices->>Backend: Generate report
+    Backend-->>APIServices: Report data
+    APIServices-->>ReactUI: Render and export
+```
 
 ---
 
 ## API And Backend Communication Flow
 
-mermaid
-flowchart LR
-ReactComponent --> ServiceLayer
-ServiceLayer --> API
-API --> Database
-Database --> API
-API --> ServiceLayer
-ServiceLayer --> ReactComponent
+```mermaid
+    flowchart LR
+    ReactComponent --> ServiceLayer
+    ServiceLayer --> API
+    API --> Database
+    Database --> API
+    API --> ServiceLayer
+    ServiceLayer --> ReactComponent
+```
 
 Explanation:
 React components call service helpers or direct Axios configs.
