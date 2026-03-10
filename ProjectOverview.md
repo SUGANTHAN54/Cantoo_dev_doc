@@ -50,11 +50,17 @@ Target users include HR leaders, organizational admins, project administrators, 
 ```
 
 Component roles:
+
 User and Browser: Human interaction and browser runtime.
+
 React UI: Screens, workflows, and layout composed of React components.
+
 State Management: Redux store and reducers for cross-feature state.
+
 API Services: Axios clients and centralized API route definitions.
+
 Backend: REST APIs hosted on Azure endpoints.
+
 Database: Persisted survey, user, and report data managed by backend services.
 
 ---
@@ -73,9 +79,13 @@ text
 
 Folder responsibilities:
 src/assets: Static images, icons, templates, and font assets.
+
 src/components: Feature modules and UI screens (auth, surveys, reports, admin, layout).
+
 src/function: Client-side report generation, export helpers, and rendering utilities.
+
 src/helpers: API clients, constants, shared utilities, theme, and validation helpers.
+
 src/redux: Redux actions, reducers, and store configuration.
 
 ---
