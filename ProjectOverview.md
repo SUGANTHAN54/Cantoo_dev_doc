@@ -207,16 +207,13 @@ Backend responses update local state and UI.
 ## System Highlights
 
 Scalability: Feature modules are separated by domain with large UI suites and data-driven components.
+
 Security: Auth tokens are stored in local storage and gated by PrivateRoute checks.
+
 Authentication: Login flow returns a token, with a refresh endpoint available (/api/Login/refreshToken).
+
 Error Handling: Axios interceptors, Notistack snackbars, and SweetAlert2 dialogs.
+
 Performance: Code-splitting with React.lazy and CRA build optimizations.
+
 State Management: Centralized Redux store with feature-specific reducers.
-
----
-
-## Documentation Notes
-
-Architecture and workflow focus, minimal code references.
-Diagrams use Mermaid for GitHub and GitLab compatibility.
-This is a client-only view; backend internals are out of scope.
