@@ -83,13 +83,21 @@ src/redux: Redux actions, reducers, and store configuration.
 ## Main Components
 
 Authentication and Access Control: Handles login, signup, reset flows, and route guards. Key files: src/components/Signin.jsx, src/components/Signup.jsx, src/components/ResetPassword.jsx, src/components/common/CustomFunction.jsx.
+
 Layout and Navigation: Application shell, navigation, and responsive layout. Key files: src/components/layout/index.jsx, src/components/layout/Navbar.jsx, src/components/layout/Sidebar.jsx.
+
 360 Survey Module: Project setup, competency selection, roster management, and participant flow. Key files: src/components/thinkwise_360/projects/index.jsx, src/components/thinkwise_360/projects/steps.
+
 Team Survey Module: Team survey setup, tasks, reminders, and reporting. Key files: src/components/Teamsurvey.
+
 Development Plan and Assessment: Development plans, assessments, and feedback workflows. Key files: src/components/development.
+
 Hiring Projects: Hiring surveys, interviews, candidate management, and reports. Key files: src/components/hiring_project.
+
 Reporting and Exports: PDF and Word report generation, chart rendering, and exports. Key files: src/components/Report, src/function/GroupReport.js, src/function/Individualreportgeneration.js.
+
 State Management Layer: Redux store, actions, and reducers for app state. Key files: src/redux/store/ConfigureStore.js, src/redux/reducers/RootReducer.js.
+
 API Layer: Axios clients and centralized API endpoints. Key files: src/helpers/API.js, src/helpers/APIONE.js, src/helpers/constants/ApiRoutes.js.
 
 ```mermaid
