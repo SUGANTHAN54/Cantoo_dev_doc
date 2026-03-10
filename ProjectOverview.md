@@ -1,7 +1,7 @@
 # Project Overview
 
 > **Callout**
-> This document focuses on architecture and workflows. It avoids copying code and instead references key modules and files.
+> This document focuses on architecture and workflows. It references key modules and files.
 
 ---
 
