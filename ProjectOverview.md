@@ -1,358 +1,211 @@
-# Project Overview Documentation
+# Project Overview
 
-> [!NOTE]
-> This document summarizes the architecture and operational design of the **ThinkWise API** repository for developers, technical reviewers, and business stakeholders.
+> **Callout**
+> This document focuses on architecture and workflows. It avoids copying code and instead references key modules and files.
 
 ---
 
-## Project Overview
+## What The Project Does
 
-### What the Project Does
-ThinkWise is an ASP.NET Core Web API platform used to run and manage talent-development workflows such as **360 assessments**, **team surveys**, **hiring assessments**, **development plans**, and **report generation**.
+This React client is the primary web interface for the Cantoo platform. It enables organizations to run multi-participant assessments and surveys, including 360 feedback, team surveys, development plans, and hiring assessments. The application solves the problem of coordinating survey setup, participant management, task completion, and report generation in a single, role-based web experience.
 
-### Problem It Solves
-Organizations typically run these workflows across disconnected tools (survey tools, spreadsheets, email templates, report tools). ThinkWise centralizes this into one backend platform that:
-- orchestrates participant lifecycle and project status,
-- automates reminders and scheduled actions,
-- generates structured reports for decision-making,
-- supports admin and partner-level multi-organization operations.
-
-### Target Users
-- Platform admins and partner administrators
-- Organization admins and project owners
-- Participants, respondents, interviewers, and candidates
-- Operations teams handling communication and reporting
-
-### Main Functionality
-- Project setup and lifecycle management for multiple assessment types
-- User, partner, organization, and order management
-- Survey and response workflows (360 and team survey)
-- Hiring workflow support (guides, candidate/interviewer flows)
-- Report generation and distribution (individual/group/teams/hiring/dev plans)
-- File/logo upload and storage integration
-- Scheduled reminder automations
+Target users include HR leaders, organizational admins, project administrators, coaches, and survey participants. The system’s core functionality covers authentication, project and roster management, survey execution, report generation, and administrative oversight.
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology | How It Is Used |
-| --- | --- | --- |
-| Runtime | .NET Core 3.1 (`netcoreapp3.1`) | Core application runtime |
-| Web API Framework | ASP.NET Core Web API | REST endpoints with attribute routing |
-| API Documentation | Swagger / Swashbuckle | Interactive API docs and testing |
-| Authentication | JWT Bearer | Access token validation for protected endpoints |
-| Token Utility | Custom token encryption/decryption | Token obfuscation/encryption in middleware and utility methods |
-| Business Layer | Service-oriented C# classes | Domain logic implementation |
-| Data Access | `Microsoft.ApplicationBlocks.Data` (`SqlHelper`) | Stored-procedure-based DB access |
-| ORM Artifacts | Entity Framework Core models present | Supplemental data model scaffolding (`ThinkwiseCentraldevContext`) |
-| Database | SQL Server | Primary system-of-record |
-| Scheduling | Quartz | Background jobs (reminders processing) |
-| Email/Comms | SendGrid, Twilio | Invitation/reminder/notification workflows |
-| External CRM | HubSpot API (via RestSharp) | Contact synchronization flows |
-| Storage | Azure Blob Storage | File and logo uploads |
-| Document/Reporting | Aspose, OpenXML, iText, EPPlus, GemBox | Report and document generation |
-| Deployment Pattern | IIS/Azure-style hosting compatibility | Build assets and configuration support web deployment |
-| CI/CD Pipeline | CI/CD Pipeline (Azure DevOps / GitHub Actions) | Automated build, validation, and deployment |
-
-> [!IMPORTANT]
-> The project is primarily **stored-procedure-driven**, not a strict repository-pattern implementation.
+| Layer | Technology |
+|---|---|
+| Frontend Framework | React 17 with Create React App (react, react-dom, react-scripts) |
+| Language | JavaScript (ES6+) |
+| Routing | React Router v5 (react-router-dom) |
+| State Management | Redux + Thunk (redux, react-redux, redux-thunk) |
+| Styling | Material UI v4 and MUI v5, Emotion, Styled Components |
+| UI Components | Kendo React UI suite |
+| Forms | Formik + Yup |
+| Notifications | Notistack, SweetAlert2 |
+| HTTP / API | Axios with interceptors |
+| Charts / Visualization | Kendo Charts, Chart.js, Recharts, ApexCharts |
+| Drag and Drop | react-beautiful-dnd, react-sortable-hoc |
+| Rich Text / Editors | Draft.js, react-draft-wysiwyg, HTML import/export helpers |
+| Document / Export | jsPDF, html2canvas, docx, jszip, file-saver, Excel helpers |
+| Date / Time | Moment, date-fns, MUI pickers |
+| Testing | React Testing Library |
+| Build Tooling | Create React App (react-scripts), cross-env |
+| Hosting | Not specified in repository |
 
 ---
 
 ## System Architecture
 
-The application follows a layered API architecture:
-- **Client/Frontend** calls REST endpoints.
-- **Controllers** handle routing, validation, response shaping.
-- **Services** implement domain logic and orchestration.
-- **Repository-equivalent data access** is implemented in services via `SqlHelper` + stored procedures.
-- **SQL Server** stores transactional and reporting data.
-
-### Mermaid Architecture Diagram
-
-```mermaid
+mermaid
 flowchart LR
-    User[User / Client] --> Frontend[Frontend / Consumer App]
-    Frontend --> Controller[ASP.NET Controllers]
-    Controller --> Service[Business Services]
-    Service --> Repository[Data Access via SqlHelper + Stored Procedures]
-    Repository --> Database[(SQL Server)]
+User --> Browser
+Browser --> ReactUI
+ReactUI --> StateManagement
+StateManagement --> APIServices
+APIServices --> Backend
+Backend --> Database
 
-    Service --> SendGrid[SendGrid]
-    Service --> Twilio[Twilio]
-    Service --> HubSpot[HubSpot API]
-    Service --> Blob[Azure Blob Storage]
-    Service --> Docs[Report Engines/Aspose/OpenXML/iText]
-
-    Quartz[Quartz Jobs] --> Service
-```
-
-### Component Role Summary
-- **Frontend/Consumer App**: External web clients or admin apps consuming APIs.
-- **Controllers**: API boundary and HTTP contract enforcement.
-- **Services**: Business rules, orchestration, integration, and data shaping.
-- **Repository-equivalent access**: Stored-procedure execution and dataset retrieval.
-- **Database**: Persistent store for users, projects, tasks, surveys, reports, and audit data.
+Component roles:
+User and Browser: Human interaction and browser runtime.
+React UI: Screens, workflows, and layout composed of React components.
+State Management: Redux store and reducers for cross-feature state.
+API Services: Axios clients and centralized API route definitions.
+Backend: REST APIs hosted on Azure endpoints.
+Database: Persisted survey, user, and report data managed by backend services.
 
 ---
 
 ## Folder Structure
 
-```text
-thinkwise-api/
-+- ThinkWise/
-   +- Controller/
-   +- EmailTemplates/
-   +- Languages/
-   +- ReportImages/
-   +- ReportTemp/
-   +- TW360RosterErrors/
-   +- Program.cs
-   +- Startup.cs
-   +- appsettings.json
-+- ThinkWise.Business/
-   +- IService/
-   +- Service/
-   +- CustomModel/
-   +- Common/
-   +- Model/
-   +- Translate/
-+- Aspose/
-+- Build/
-+- DeveloperDoc/
-```
+text
+/src
+  /assets
+  /components
+  /function
+  /helpers
+  /redux
+  App.js
+  index.js
 
-### Folder Responsibilities
-- `ThinkWise/Controller`: API endpoints by domain (19 controller files).
-- `ThinkWise.Business/Service`: Core domain and integration logic (25 service files).
-- `ThinkWise.Business/IService`: Service contracts and dependency injection interfaces (23 files).
-- `ThinkWise.Business/CustomModel`: DTOs and request/response payload models.
-- `ThinkWise.Business/Common`: Shared helpers for config, token handling, encryption, storage utilities.
-- `ThinkWise.Business/Model`: EF model context and entity mapping scaffolds.
-- `ThinkWise/EmailTemplates`, `Languages`, `ReportImages`, `ReportTemp`: communication/reporting assets and runtime content.
+Folder responsibilities:
+src/assets: Static images, icons, templates, and font assets.
+src/components: Feature modules and UI screens (auth, surveys, reports, admin, layout).
+src/function: Client-side report generation, export helpers, and rendering utilities.
+src/helpers: API clients, constants, shared utilities, theme, and validation helpers.
+src/redux: Redux actions, reducers, and store configuration.
 
 ---
 
 ## Main Components
 
-### 1) Authentication Module
-- **Purpose**: Authenticate users and secure protected API endpoints.
-- **Responsibilities**: login, token generation, token refresh, bearer token validation.
-- **Important components**:
-  - `ThinkWise/Controller/LoginController.cs`
-  - `ThinkWise.Business/Service/LoginService.cs`
-  - `ThinkWise.Business/Common/common.cs`
-  - `ThinkWise/Startup.cs` (JWT configuration)
+Authentication and Access Control: Handles login, signup, reset flows, and route guards. Key files: src/components/Signin.jsx, src/components/Signup.jsx, src/components/ResetPassword.jsx, src/components/common/CustomFunction.jsx.
+Layout and Navigation: Application shell, navigation, and responsive layout. Key files: src/components/layout/index.jsx, src/components/layout/Navbar.jsx, src/components/layout/Sidebar.jsx.
+360 Survey Module: Project setup, competency selection, roster management, and participant flow. Key files: src/components/thinkwise_360/projects/index.jsx, src/components/thinkwise_360/projects/steps.
+Team Survey Module: Team survey setup, tasks, reminders, and reporting. Key files: src/components/Teamsurvey.
+Development Plan and Assessment: Development plans, assessments, and feedback workflows. Key files: src/components/development.
+Hiring Projects: Hiring surveys, interviews, candidate management, and reports. Key files: src/components/hiring_project.
+Reporting and Exports: PDF and Word report generation, chart rendering, and exports. Key files: src/components/Report, src/function/GroupReport.js, src/function/Individualreportgeneration.js.
+State Management Layer: Redux store, actions, and reducers for app state. Key files: src/redux/store/ConfigureStore.js, src/redux/reducers/RootReducer.js.
+API Layer: Axios clients and centralized API endpoints. Key files: src/helpers/API.js, src/helpers/APIONE.js, src/helpers/constants/ApiRoutes.js.
 
-### 2) API Controller Layer
-- **Purpose**: Expose business capabilities via REST endpoints.
-- **Responsibilities**: route mapping, request validation, response codes.
-- **Important components**:
-  - `ThinkWise/Controller/*.cs` (Survey, TeamSurvey, Hiring, Report, User, Upload, etc.)
-
-### 3) Business Services Layer
-- **Purpose**: Implement domain rules and process orchestration.
-- **Responsibilities**: execute workflows, call DB procedures, trigger comms/report generation.
-- **Important components**:
-  - `ThinkWise.Business/Service/Survey360Service.cs`
-  - `ThinkWise.Business/Service/TeamSurveyService.cs`
-  - `ThinkWise.Business/Service/HiringService.cs`
-  - `ThinkWise.Business/Service/ReportService.cs`
-
-### 4) Data Access Layer (Repository-equivalent)
-- **Purpose**: Persist/retrieve business data.
-- **Responsibilities**: execute SQL stored procedures and return datasets/tables.
-- **Important components**:
-  - `SqlHelper.ExecuteDataset` usage across service classes
-  - SQL procedure contracts such as `spUser_Get*`, `spProject_Ins*`, `spDevObjective_Get*`
-
-### 5) Reporting & Document Module
-- **Purpose**: Produce business and assessment reports.
-- **Responsibilities**: compose data, render templates, generate output documents.
-- **Important components**:
-  - `ThinkWise.Business/Service/*Report*.cs`
-  - `Aspose/` libraries, OpenXML, iText integrations
-
-### 6) External Integrations Module
-- **Purpose**: Connect platform to communication and storage providers.
-- **Responsibilities**: send notifications, upload files, contact sync.
-- **Important components**:
-  - SendGrid/Twilio logic in service layer
-  - HubSpot contact operations in `LoginService`
-  - Azure Blob logic in `Common.UploadFileToAzure`
-
-### 7) Scheduler Module
-- **Purpose**: Run time-based automation.
-- **Responsibilities**: reminder processing.
-- **Important components**:
-  - `ThinkWise.Business/Service/SendMailJob.cs`
-  - Quartz setup in `ThinkWise/Startup.cs`
-
-### Component Diagram
-
-```mermaid
+mermaid
 flowchart TD
-    Controllers[Controllers] --> AuthService[Auth/Login Service]
-    Controllers --> SurveyService[Survey & Team Services & Hiring & Dev Plan/Assessment]
-    Controllers --> ReportService[Report Services]
-    Controllers --> UserService[User/Org/Partner Services]
-
-    AuthService --> TokenUtil[Token Utility]
-    SurveyService --> DataAccess[SqlHelper + Stored Procedures]
-    ReportService --> DataAccess
-    UserService --> DataAccess
-
-    DataAccess --> SQL[(SQL Server)]
-
-    SurveyService --> Comm[SendGrid/Twilio]
-    UserService --> HubSpot[HubSpot API]
-    UserService --> Blob[Azure Blob Storage]
-    ReportService --> Docs[Document Engines]
-
-    Quartz[Quartz Jobs] --> SurveyService
-    Quartz --> Comm
-```
+Pages --> Components
+Pages --> AuthService
+AuthService --> APIServices
+Components --> UIElements
+APIServices --> Backend
+Backend --> Database
 
 ---
 
 ## Key Workflows
 
-### Workflow 1: User Login
-1. Client submits credentials to `LoginController`.
-2. Controller calls `LoginService.Login`.
-3. Service validates user via stored procedure (`spUser_Login`).
-4. JWT token is generated and encrypted.
-5. Controller returns token and user context.
+### User Login
 
-```mermaid
+1. User submits credentials on sign-in screen.
+2. UI sends login request to backend API.
+3. Backend returns token and user metadata.
+4. Token is stored in local storage and protected routes become available.
+
+mermaid
 sequenceDiagram
-    participant U as User
-    participant C as LoginController
-    participant S as LoginService
-    participant DB as SQL Stored Proc
+User->>ReactUI: Enter credentials
+ReactUI->>APIServices: POST /api/Login/login
+APIServices->>Backend: Authenticate user
+Backend-->>APIServices: Token and user data
+APIServices-->>ReactUI: Success response
+ReactUI-->>User: Redirect to dashboard
 
-    U->>C: POST /api/Login/login
-    C->>S: Login(username, password, domain)
-    S->>DB: spUser_Login
-    DB-->>S: User/Auth data
-    S-->>C: Encrypted JWT + profile
-    C-->>U: 200 OK / 403 Forbidden
-```
+### Create 360 Project
 
-### Workflow 2: 360 Project Management
-1. Client calls `Survey360Controller` endpoint to create/update/list projects.
-2. Service executes stored procedures for project, item, roster, and relationship updates.
-3. Progress and response state are computed and returned.
+1. Admin chooses setup type and inputs project data.
+2. UI saves project via Survey360 endpoints.
+3. User selects competencies and items.
+4. Roster is created or imported, then project is launched.
 
-```mermaid
+mermaid
 sequenceDiagram
-    participant U as User
-    participant C as Survey360Controller
-    participant S as Survey360Service
-    participant DB as SQL Stored Proc
+Admin->>ReactUI: Start new 360 project
+ReactUI->>APIServices: POST /api/Survey360/startFromScratch
+APIServices->>Backend: Create project
+Backend-->>APIServices: Project id
+ReactUI->>APIServices: POST /api/Survey360/addProjectItems
+ReactUI->>APIServices: POST /api/RosterUpload/addToRoster
+ReactUI->>APIServices: POST /api/Survey360/launchProject
+APIServices-->>ReactUI: Launch confirmation
 
-    U->>C: Project setup/list request
-    C->>S: Execute domain operation
-    S->>DB: spProject_Ins*, spProjectUser*, spTempUpload360*
-    DB-->>S: Project datasets
-    S-->>C: Aggregated response DTO
-    C-->>U: API response
-```
+### Team Survey Task Completion
 
-### Workflow 3: Report Generation
-1. User requests report from report endpoint.
-2. Service retrieves report data from DB.
-3. Service generates document output using reporting libraries.
-4. Response returns generated output metadata/content.
+1. Participant follows invite link.
+2. App loads task details by URL id.
+3. Participant submits ratings and open-ended responses.
+4. Backend stores responses and updates task status.
 
-```mermaid
+mermaid
 sequenceDiagram
-    participant U as User
-    participant C as ReportController
-    participant S as ReportService
-    participant DB as SQL Stored Proc
-    participant D as Doc Engine
+Participant->>ReactUI: Open task link
+ReactUI->>APIServices: GET /api/TeamSurvey/getTeamSurveyLink
+APIServices->>Backend: Resolve task
+Backend-->>APIServices: Task context
+ReactUI->>APIServices: POST /api/TeamSurvey/performConfirmation
+APIServices-->>ReactUI: Submission result
 
-    U->>C: Report request
-    C->>S: Generate report
-    S->>DB: Fetch report data
-    DB-->>S: Data tables
-    S->>D: Render PDF/DOCX
-    D-->>S: Generated file
-    S-->>C: Result payload
-    C-->>U: Report response
-```
+### Report Generation
 
-### Workflow 4: Scheduled Reminder Processing
-1. Quartz triggers job based on cron schedule.
-2. Job loads pending reminders/schedules from DB.
-3. Job invokes service/email routines.
-4. Status updates are persisted.
+1. Admin requests a report.
+2. UI triggers backend report generation.
+3. Report metadata and content are returned.
+4. Client renders PDF or Word export.
 
-```mermaid
+mermaid
 sequenceDiagram
-    participant Q as Quartz
-    participant J as Job
-    participant S as Service Layer
-    participant DB as SQL Stored Proc
-    participant E as Email Provider
-
-    Q->>J: Trigger cron
-    J->>DB: Fetch pending reminders
-    DB-->>J: Reminder rows
-    J->>S: Execute reminder actions
-    S->>E: Send notifications
-    S->>DB: Update execution status
-    J-->>Q: Completed
-```
+Admin->>ReactUI: Request report
+ReactUI->>APIServices: POST /api/Report/ProjectSummaryReportGenerate
+APIServices->>Backend: Generate report
+Backend-->>APIServices: Report data
+APIServices-->>ReactUI: Render and export
 
 ---
 
-## API Flow Overview
+## API And Backend Communication Flow
 
-### Request Lifecycle
-`Client -> Controller -> Service -> Data Access (SqlHelper) -> SQL Server -> Service -> Controller -> Response`
-
-```mermaid
+mermaid
 flowchart LR
-    A[Client] --> B[Controller]
-    B --> C[Service]
-    C --> D[SqlHelper / Stored Procedures]
-    D --> E[(SQL Server)]
-    E --> D
-    D --> C
-    C --> B
-    B --> F[HTTP Response]
-```
+ReactComponent --> ServiceLayer
+ServiceLayer --> API
+API --> Database
+Database --> API
+API --> ServiceLayer
+ServiceLayer --> ReactComponent
 
-> [!TIP]
-> Treat the service layer as the primary orchestration boundary. Keep controllers thin and avoid pushing business logic into API endpoints.
+Explanation:
+React components call service helpers or direct Axios configs.
+Requests flow through src/helpers/API.js or src/helpers/APIONE.js.
+Endpoints are centralized in src/helpers/constants/ApiRoutes.js.
+Backend responses update local state and UI.
+
+> **Callout**
+> The API base URL is configured in src/helpers/constants/ApiRoutes.js and points to an Azure-hosted REST backend.
 
 ---
 
 ## System Highlights
 
-| Area | Current Strength |
-| --- | --- |
-| Scalability | Layered API with modular domain services and background job support |
-| Security | JWT auth, bearer validation, and protected endpoint attributes |
-| Authentication | Login/refresh/access-key flows via dedicated auth service |
-| Background Processing | Quartz-based scheduled automation for reminders |
-| Integration Readiness | Built-in hooks for SendGrid, Twilio, HubSpot, Azure Blob |
-| Reporting Capability | Mature report pipeline with enterprise document libraries |
-| Error Handling | Try/catch patterns in controllers/services with status-based responses |
+Scalability: Feature modules are separated by domain with large UI suites and data-driven components.
+Security: Auth tokens are stored in local storage and gated by PrivateRoute checks.
+Authentication: Login flow returns a token, with a refresh endpoint available (/api/Login/refreshToken).
+Error Handling: Axios interceptors, Notistack snackbars, and SweetAlert2 dialogs.
+Performance: Code-splitting with React.lazy and CRA build optimizations.
+State Management: Centralized Redux store with feature-specific reducers.
 
 ---
 
 ## Documentation Notes
 
-- This documentation intentionally focuses on architecture and system behavior.
-- It references key files and modules without copying full source files.
-- Diagrams are Mermaid-compatible for GitHub/GitLab rendering.
-- Suitable for architecture reviews, onboarding, and stakeholder presentations.
-
----
-
-### Deliverable
-File created: `DeveloperDoc/ProjectOverview.md`
+Architecture and workflow focus, minimal code references.
+Diagrams use Mermaid for GitHub and GitLab compatibility.
+This is a client-only view; backend internals are out of scope.
