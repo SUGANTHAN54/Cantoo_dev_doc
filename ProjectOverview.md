@@ -212,11 +212,12 @@ API Layer: Axios clients and centralized API endpoints. Key files: src/helpers/A
     ServiceLayer --> ReactComponent
 ```
 
-Explanation:
-React components call service helpers or direct Axios configs.
-Requests flow through src/helpers/API.js or src/helpers/APIONE.js.
-Endpoints are centralized in src/helpers/constants/ApiRoutes.js.
-Backend responses update local state and UI.
+### Explanation:
+
+1. React components call service helpers or direct Axios configs.
+2. Requests flow through src/helpers/API.js or src/helpers/APIONE.js.
+3. Endpoints are centralized in src/helpers/constants/ApiRoutes.js.
+4. Backend responses update local state and UI.
 
 > **Callout**
 > The API base URL is configured in src/helpers/constants/ApiRoutes.js and points to an Azure-hosted REST backend.
