@@ -150,12 +150,17 @@ API Layer: Axios clients and centralized API endpoints. Key files: src/helpers/A
 
 ```mermaid
   sequenceDiagram
-    Participant->>ReactUI: Open task link
-    ReactUI->>APIServices: GET /api/TeamSurvey/getTeamSurveyLink
-    APIServices->>Backend: Resolve task
-    Backend-->>APIServices: Task context
-    ReactUI->>APIServices: POST /api/TeamSurvey/performConfirmation
-    APIServices-->>ReactUI: Submission result
+    participant User
+    participant ReactApp
+    participant APIGateway
+    participant BackendService
+
+    User->>ReactApp: Open task link
+    ReactApp->>APIGateway: GET /TeamSurvey/getTeamSurveyLink
+    APIGateway->>BackendService: Resolve task
+    BackendService-->>APIGateway: Task context
+    ReactApp->>APIGateway: POST /TeamSurvey/performConfirmation
+    APIGateway-->>ReactApp: Submission result
 ```
 
 ### Report Generation
